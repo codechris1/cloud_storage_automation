@@ -1,0 +1,86 @@
+{
+    "api_key": "", 
+    "files":
+    {
+        "list_folder":
+        {
+            "url": "https://api.dropboxapi.com/2/files/list_folder",
+            "method": "POST",
+            "parameters": 
+            {
+                "path": "",
+                "recursive": false,
+                "include_media_info": false,
+                "include_deleted": false,
+                "include_has_explicit_shared_members": false,
+                "include_mounted_folders": true,
+                "include_non_downloadable_files": true,
+                "limit": 1
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
+        },
+        "list_folder_continue":
+        {
+            "url": "https://api.dropboxapi.com/2/files/list_folder/continue",
+            "method": "POST",
+            "parameters":
+            {
+                "cursor": ""
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
+        },
+        "create_folder":
+        {
+            "url": "https://api.dropboxapi.com/2/files/create_folder_v2",
+            "method": "POST",
+            "parameters":
+            {
+                "path": "",
+                "autorename": true
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
+        },
+        "move_batch":
+        {
+            "url": "https://api.dropboxapi.com/2/files/move_batch_v2",
+            "method": "POST",
+            "parameters":
+            {
+                "entries": [
+                    {
+                        "from_path": "",
+                        "to_path": ""
+                    }
+                ],
+                "autorename": false,
+                "allow_ownership_transfer": false
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
+        },
+        "move_batch_check":
+        {
+            "url": "https://api.dropboxapi.com/2/files/move_batch/check_v2",
+            "method": "POST",
+            "parameters":
+            {
+                "async_job_id": ""
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
+        }
+    }   
+}
