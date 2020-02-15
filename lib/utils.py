@@ -5,6 +5,34 @@ import time
 
 console = []
 
+def move_by_dates_101(args):
+    (success, fail) = [[],[]]
+    api_dic = load_json_file("conf/api_dic.json")
+    filtered_files = extract_by_dates(args)
+    start = datetime.datetime.now()
+    est_end = start + datetime.timedelta(0,len(filtered_files))
+    td = est_end - start
+    td_mins = int(round(td.total_seconds() / 60))
+    add_log_entry("Move of {0} files started at : {1} and is estimated to finish at {2} in ~ {3} mins".format(len(filtered_files),start.strftime("%m-%d-%Y %I:%M %p"),est_end.strftime("%m-%d-%Y %I:%M %p"),td_mins))
+    if folder_exists(args):
+        for file in filtered_files:
+            api_dic = set_dict_entry(api_dic, "files/move/parameters/from_path", file["path_lower"])
+            api_dic = set_dict_entry(api_dic, "files/move/parameters/to_path", "{0}/{1}".format(args["to_path"],file["name"]))
+            response = dropbox_api(api_dic, "files/move")
+            jresponse = json.loads(response.content)
+            if response.ok:
+                success.append(jresponse)
+            else:
+                jresponse["from_path"] = file["path_lower"]
+                jresponse["to_path"] = "{0}/{1}".format(args["to_path"],file["name"])
+                fail.append(jresponse)
+    end = datetime.datetime.now()
+    td = end - start
+    td_mins = int(round(td.total_seconds() / 60))
+    add_log_entry("Move of {0} files finished at : {1} and it took ~ {2} mins to finish".format(len(filtered_files),end.strftime("%m-%d-%Y %I:%M %p"),td_mins))
+    save_output(success, "log/move_success_101.json")
+    save_output(fail, "log/move_fail_101.json")
+
 def move_by_dates(args):
     (entries, finished, iteration, wait_time, success, fail) = [[], False, 1, args["wait_time"], [], []]
     api_dic = load_json_file("conf/api_dic.json")
@@ -78,6 +106,7 @@ def folder_exists(args):
         level = "files/create_folder/parameters"
         api_dic = set_dict_entry(api_dic,"{0}/path".format(level),args["to_path"])
         response = dropbox_api(api_dic, "files/create_folder")
+        save_output(get_dict_entry(api_dic, "files/create_folder"), "log/api_dic_folder_create.json")
         if response.ok: 
             add_log_entry("Folder {0} created successfully!".format(args["to_path"]))
             return True
