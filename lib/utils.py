@@ -30,6 +30,7 @@ def move_by_dates_101(args):
     td = end - start
     td_mins = int(round(td.total_seconds() / 60))
     add_log_entry("Move of {0} files finished at : {1} and it took ~ {2} mins to finish".format(len(filtered_files),end.strftime("%m-%d-%Y %I:%M %p"),td_mins))
+    add_log_entry("A total of {0} files were moved and {1} errors were reported".format(len(success),len(fail)))
     save_output(success, "log/move_success_101.json")
     save_output(fail, "log/move_fail_101.json")
 
