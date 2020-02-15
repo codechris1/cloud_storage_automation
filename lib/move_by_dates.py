@@ -11,7 +11,7 @@ args = {
     "to_date": "20111231", # Format YYYYMMDD
     "recursive": True,
     "limit": 2000,
-    "wait_time": 5
+    "wait_time": 90
 }
 
 def main():
