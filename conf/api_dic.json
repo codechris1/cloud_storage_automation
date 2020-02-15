@@ -81,6 +81,20 @@
             {
                 "Content-Type": "application/json"
             }
+        },
+        "move":
+        {
+            "url": "https://api.dropboxapi.com/2/files/move_v2",
+            "method": "POST",
+            "parameters":
+            {
+                "from_path": "",
+                "to_path": ""
+            },
+            "headers":
+            {
+                "Content-Type": "application/json"
+            }
         }
     }   
 }
