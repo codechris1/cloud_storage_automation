@@ -192,7 +192,9 @@ def categorize(results,args):
         if element['.tag'] == "folder": folders.append(element)
         elif element['.tag'] == "file": 
             files.append(element)
-            if range_date(element['name'], args['from_date'], args['to_date']): 
+            if range_date(element['name'], args['from_date'], args['to_date']) and (args['move_criteria'] == 1): 
+                filtered_files.append(element)
+            elif args['move_criteria'] == 2:
                 filtered_files.append(element)
         else: unknown.append(element)
     return {"folders": folders, "files": files, "unknown": unknown, "filtered_files": filtered_files}
